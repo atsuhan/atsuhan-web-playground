@@ -1,12 +1,11 @@
-# atsuhan-html5-starter
+# atsuhan-web-playground
 
-## fork 元
+WebGL(three.js, glsl)や WebAR(AR.js, 8thWall)などでモックを作る場所
 
-[kayac-html5-starter](https://github.com/kayac/kayac-html5-starter)
+[atsuhan-web-kit](https://github.com/atsuhan/atsuhan-web-kit)を使用。
+以下 ↑ と同様の説明
 
-これを改造して
-
-- Linter(ESlint, prettier, Stylelint)を設定
+---
 
 ## 事前に用意するもの
 
