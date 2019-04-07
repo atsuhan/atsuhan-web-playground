@@ -92,6 +92,26 @@ module.exports = {
                 })
             },
             {
+                test: /\.styl$/,
+                use: ExtractTextPlugin.extract({
+                    use: [
+                        {
+                            loader: 'css-loader',
+                            options: {
+                                importLoaders: 2,
+                            }
+                        },
+                        'postcss-loader',
+                        {
+                            loader: 'stylus-loader',
+                            options: {
+                                includePaths: [ `${SRC}/styl` ],
+                            },
+                        }
+                    ]
+                })
+            },
+            {
                 test: /.ya?ml$/,
                 loader: 'js-yaml-loader',
             }
