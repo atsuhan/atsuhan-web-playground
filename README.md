@@ -1,5 +1,10 @@
 # atsuhan-web-playground
 
+
+* 基本的にCodePenで行う意向にしました *
+https://codepen.io/atsuhan
+
+
 WebGL(three.js, glsl)や WebAR(AR.js, 8thWall)などでモックを作る場所
 
 [atsuhan-web-kit](https://github.com/atsuhan/atsuhan-web-kit)を使用。
