@@ -1,2 +1,5 @@
 BASE_DIR: /
 IMG_DIR: /img
+
+ENTRY:
+  wgldorg/w014/script.js: ./src/js/pages/wgldorg/w014/script.js
