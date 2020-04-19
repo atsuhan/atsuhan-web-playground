@@ -12,7 +12,7 @@ const HOST = process.env.HOST || '127.0.0.1';
 const PORT = process.env.PORT || 3000;
 
 const constants = readConfig(`${SRC}/constants.yml`);
-const { BASE_DIR, ENTRY } = constants;
+const { BASE_DIR } = constants;
 
 // page/**/*.pug -> dist/**/*.html
 const htmlTemplates = routeDataMapper({
@@ -25,7 +25,10 @@ const htmlTemplates = routeDataMapper({
 
 module.exports = {
   // エントリーファイル
-  entry: ENTRY,
+  entry: {
+    'js/script.js': `${SRC}/js/script.js`,
+    'css/style.css': `${SRC}/scss/style.scss`
+  },
   // 出力するディレクトリ・ファイル名などの設定
   output: {
     path: path.resolve(__dirname, DEST + BASE_DIR),
@@ -86,11 +89,6 @@ module.exports = {
       {
         test: /.ya?ml$/,
         loader: 'js-yaml-loader'
-      },
-      {
-        test: /\.(glsl|vs|fs|vert|frag)$/,
-        exclude: /node_modules/,
-        use: ['raw-loader', 'glslify-loader']
       }
     ]
   },
