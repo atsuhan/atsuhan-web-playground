@@ -1,4 +1,4 @@
-kayac-html5-starter
+atsuhan-web-playground
 ====
 
 ## 事前に用意するもの
