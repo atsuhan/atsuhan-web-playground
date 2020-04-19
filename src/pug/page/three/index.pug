@@ -1,0 +1,12 @@
+extends /layout/_default-layout
+
+prepend config-block
+  - page_name = ''
+
+//- append stylesheet-block
+
+append javascript-block
+  script(src="https://cdnjs.cloudflare.com/ajax/libs/three.js/110/three.min.js")
+
+block content-block
+  canvas#canvas
