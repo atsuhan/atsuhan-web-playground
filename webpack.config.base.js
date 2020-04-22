@@ -1,9 +1,13 @@
 'use strict';
 
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const routeDataMapper = require('webpack-route-data-mapper');
 const readConfig = require('read-config');
 const path = require('path');
+
+console.log(CopyWebpackPlugin);
 
 // base config
 const SRC = './src';
@@ -12,18 +16,23 @@ const HOST = process.env.HOST || '127.0.0.1';
 const PORT = process.env.PORT || 3000;
 
 const constants = readConfig(`${SRC}/constants.yml`);
-const { BASE_DIR, ENTRY } = constants;
+const { MODE, BASE_DIR, ENTRY } = constants;
 
 // page/**/*.pug -> dist/**/*.html
 const htmlTemplates = routeDataMapper({
   baseDir: `${SRC}/pug/page`,
   src: '**/[!_]*.pug',
+  options: {
+    inject: false
+  },
   locals: Object.assign({}, constants, {
-    meta: readConfig(`${SRC}/pug/meta.yml`)
+    meta: readConfig(`${SRC}/pug/meta.yml`),
+    keys: readConfig('keys.json')
   })
 });
 
 module.exports = {
+  mode: MODE,
   // エントリーファイル
   entry: ENTRY,
   // 出力するディレクトリ・ファイル名などの設定
@@ -40,7 +49,7 @@ module.exports = {
         loader: 'babel-loader',
         exclude: /(node_modules)/,
         options: {
-          compact: true,
+          compact: MODE === 'production',
           cacheDirectory: true
         }
       },
@@ -107,6 +116,15 @@ module.exports = {
   },
 
   plugins: [
+    // build先のディレクトリを綺麗に(削除)する。
+    new CleanWebpackPlugin(),
+    // staticをbuild先にコピーする。
+    new CopyWebpackPlugin([
+      {
+        from: path.resolve(`${SRC}/static`),
+        to: path.resolve(DEST)
+      }
+    ]),
     // 複数のHTMLファイルを出力する
     ...htmlTemplates,
     // style.cssを出力

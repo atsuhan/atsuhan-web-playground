@@ -1,14 +1,17 @@
 extends /layout/_default-layout
 
 prepend config-block
-  - page_name = ''
-  
+  - page_name = 'WebAR'
+  - page_description = 'WebAR init page'
+
 append stylesheet-block
   link(rel="stylesheet", href=`./style.css`)
 
 append javascript-block
   script(src="https://cdnjs.cloudflare.com/ajax/libs/three.js/110/three.min.js")
-  script(src="/three/script.js")
+  script(src="//cdn.8thwall.com/web/xrextras/xrextras.js")
+  script(async src=`//apps.8thwall.com/xrweb?appKey=${keys.EIGHTHWALL}`)
+  script(src="/webar/script.js")
 
 block content-block
   canvas#canvas
