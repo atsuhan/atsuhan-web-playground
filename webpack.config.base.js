@@ -100,6 +100,7 @@ module.exports = {
   devServer: {
     host: HOST,
     port: PORT,
+    useLocalIp: true,
     contentBase: DEST,
     openPage: path.relative('/', BASE_DIR),
     disableHostCheck: true
