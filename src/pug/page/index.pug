@@ -1,0 +1,14 @@
+extends /layout/_default-layout
+
+prepend config-block
+  - page_name = ''
+
+append stylesheet-block
+  link(rel="stylesheet", href=`./style.css`)
+
+append javascript-block
+  script(src="./script.js")
+
+block content-block
+  .sample-icon
+  | hello, world!

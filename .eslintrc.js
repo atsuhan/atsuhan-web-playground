@@ -5,6 +5,7 @@ module.exports = {
     node: true
   },
   parserOptions: {
+    ecmaVersion: 6,
     parser: 'babel-eslint',
     sourceType: 'module'
   },
@@ -14,5 +15,10 @@ module.exports = {
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'prettier/prettier': ['error']
+  },
+  globals: {
+    THREE: true,
+    XR8: true,
+    XRExtras: true
   }
 };

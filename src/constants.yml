@@ -1,5 +1,12 @@
+MODE: development # development or production (or none)
 BASE_DIR: /
 IMG_DIR: /img
 
 ENTRY:
-  wgldorg/w014/script.js: ./src/js/pages/wgldorg/w014/script.js
+  style.css: ./src/scss/style.scss
+
+  three/script.js: ./src/js/pages/three/script.js
+  three/style.css: ./src/scss/style.scss
+
+  webar/script.js: ./src/js/pages/webar/script.js
+  webar/style.css: ./src/scss/style.scss

@@ -1,5 +1,7 @@
 'use strict';
 
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const routeDataMapper = require('webpack-route-data-mapper');
 const readConfig = require('read-config');
@@ -8,22 +10,27 @@ const path = require('path');
 // base config
 const SRC = './src';
 const DEST = './public';
-const HOST = process.env.HOST || '127.0.0.1';
+const HOST = process.env.HOST || '0.0.0.0';
 const PORT = process.env.PORT || 3000;
 
 const constants = readConfig(`${SRC}/constants.yml`);
-const { BASE_DIR, ENTRY } = constants;
+const { MODE, BASE_DIR, ENTRY } = constants;
 
 // page/**/*.pug -> dist/**/*.html
 const htmlTemplates = routeDataMapper({
   baseDir: `${SRC}/pug/page`,
   src: '**/[!_]*.pug',
+  options: {
+    inject: false
+  },
   locals: Object.assign({}, constants, {
-    meta: readConfig(`${SRC}/pug/meta.yml`)
+    meta: readConfig(`${SRC}/pug/meta.yml`),
+    keys: readConfig('keys.json')
   })
 });
 
 module.exports = {
+  mode: MODE,
   // エントリーファイル
   entry: ENTRY,
   // 出力するディレクトリ・ファイル名などの設定
@@ -40,7 +47,7 @@ module.exports = {
         loader: 'babel-loader',
         exclude: /(node_modules)/,
         options: {
-          compact: true,
+          compact: MODE === 'production',
           cacheDirectory: true
         }
       },
@@ -86,11 +93,6 @@ module.exports = {
       {
         test: /.ya?ml$/,
         loader: 'js-yaml-loader'
-      },
-      {
-        test: /\.(glsl|vs|fs|vert|frag)$/,
-        exclude: /node_modules/,
-        use: ['raw-loader', 'glslify-loader']
       }
     ]
   },
@@ -98,8 +100,10 @@ module.exports = {
   devServer: {
     host: HOST,
     port: PORT,
+    useLocalIp: true,
     contentBase: DEST,
-    openPage: path.relative('/', BASE_DIR)
+    openPage: path.relative('/', BASE_DIR),
+    disableHostCheck: true
   },
   // キャシュ有効化
   cache: true,
@@ -107,11 +111,20 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.json', '*'],
     alias: {
-      '@': path.join(__dirname, SRC, 'js')
+      '@': path.join(__dirname, SRC)
     }
   },
 
   plugins: [
+    // build先のディレクトリを綺麗に(削除)する。
+    new CleanWebpackPlugin(),
+    // staticをbuild先にコピーする。
+    new CopyWebpackPlugin([
+      {
+        from: path.resolve(`${SRC}/static`),
+        to: path.resolve(DEST)
+      }
+    ]),
     // 複数のHTMLファイルを出力する
     ...htmlTemplates,
     // style.cssを出力

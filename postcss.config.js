@@ -3,5 +3,5 @@ module.exports = {
     // ベンダープレフィックスを自動付与する
     require('autoprefixer')(),
     require('css-mqpacker')()
-  ]
+  ],
 };

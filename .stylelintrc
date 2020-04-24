@@ -15,6 +15,7 @@
     ],
     "at-rule-no-unknown": null,
     "scss/at-rule-no-unknown": true,
+    "unicode-bom": "never",
     "no-empty-source": null
   }
 }
