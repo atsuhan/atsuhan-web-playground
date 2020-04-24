@@ -6766,7 +6766,7 @@ querystring-es3@^0.2.0:
   resolved "https://registry.yarnpkg.com/querystring-es3/-/querystring-es3-0.2.1.tgz#9ec61f79049875707d69414596fd907a4d711e73"
   integrity sha1-nsYfeQSYdXB9aUFFlv2Qek1xHnM=
 
-querystring@0.2.0:
+querystring@0.2.0, querystring@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/querystring/-/querystring-0.2.0.tgz#b209849203bb25df820da756e747005878521620"
   integrity sha1-sgmEkgO7Jd+CDadW50cAWHhSFiA=
@@ -7741,6 +7741,11 @@ static-extend@^0.1.1:
   dependencies:
     define-property "^0.2.5"
     object-copy "^0.1.0"
+
+stats-js@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/stats-js/-/stats-js-1.0.1.tgz#377c36490c1935b9a4e68bf3acc3afeb59878f66"
+  integrity sha512-EAwEFghGNv8mlYC4CZzI5kWghsnP8uBKXw6VLRHtXkOk5xySfUKLTqTkjgJFfDluIkf/O7eZwi5MXP50VeTbUg==
 
 "statuses@>= 1.4.0 < 2", "statuses@>= 1.5.0 < 2", statuses@~1.5.0:
   version "1.5.0"

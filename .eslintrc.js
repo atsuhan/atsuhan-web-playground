@@ -17,6 +17,8 @@ module.exports = {
     'prettier/prettier': ['error']
   },
   globals: {
-    THREE: true
+    THREE: true,
+    XR8: true,
+    XRExtras: true
   }
 };

@@ -1,18 +1,16 @@
 'use strict';
 
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const routeDataMapper = require('webpack-route-data-mapper');
 const readConfig = require('read-config');
 const path = require('path');
 
-console.log(CopyWebpackPlugin);
-
 // base config
 const SRC = './src';
 const DEST = './public';
-const HOST = process.env.HOST || '127.0.0.1';
+const HOST = process.env.HOST || '0.0.0.0';
 const PORT = process.env.PORT || 3000;
 
 const constants = readConfig(`${SRC}/constants.yml`);
@@ -103,7 +101,8 @@ module.exports = {
     host: HOST,
     port: PORT,
     contentBase: DEST,
-    openPage: path.relative('/', BASE_DIR)
+    openPage: path.relative('/', BASE_DIR),
+    disableHostCheck: true
   },
   // キャシュ有効化
   cache: true,
@@ -111,7 +110,7 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.json', '*'],
     alias: {
-      '@': path.join(__dirname, SRC, 'js')
+      '@': path.join(__dirname, SRC)
     }
   },
 
