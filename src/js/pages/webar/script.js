@@ -59,18 +59,6 @@ const onStart = () => {
     force: 0.4
   });
   _threeAmbientLight.addTo(_xrThreeBase.scene);
-
-  // postprocessing
-  _composer = new EffectComposer(_xrThreeBase.renderer);
-  const renderPass = new RenderPass(_xrThreeBase.scene, _xrThreeBase.camera);
-  _composer.addPass(renderPass);
-  const bloomPath = new UnrealBloomPass(
-    new THREE.Vector2(window.innerWidth, window.innerHeight),
-    1.5,
-    0.4,
-    0.85
-  );
-  _composer.addPass(bloomPath);
 };
 
 const onUpdate = () => {
