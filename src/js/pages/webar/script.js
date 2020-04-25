@@ -6,9 +6,10 @@ import ThreeVideoPlane from '@/js/lib/three/meshes/ThreeVideoPlane';
 import XrThreeBase from '@/js/lib/8thwall/XrThreeBase';
 import ThreeDirectionalLight from '../../lib/three/lights/ThreeDirectionalLight';
 import ThreeAmbientLight from '../../lib/three/lights/ThreeAmbientLight';
+import threeRaycaster from '../../lib/three/ThreeRaycaster';
 
 let _stats = null;
-let _videoEl = document.querySelector('.videos__takagi');
+let _videoEl = document.querySelector('.videos__hoshino');
 let _threeAmbientLight = null;
 let _threeDirectionalLight = null;
 let _threeGround = null;
@@ -33,12 +34,23 @@ const onStart = () => {
     videoEl: _videoEl
   });
   _threeVideoPlane.init();
-  _threeVideoPlane.move(new THREE.Vector3(0, 2, -3));
-  _videoEl.play();
-  _threeVideoPlane.addTo(_xrThreeBase.scene);
+  window.addEventListener('touchstart', e => {
+    const rayPos = threeRaycaster.getRayIntersectPos(e, _xrThreeBase.camera, [
+      _threeGround.mesh
+    ]);
+    _threeVideoPlane.move(rayPos);
+    _threeVideoPlane.lookAtAxisY(_xrThreeBase.camera);
+    if (!_threeVideoPlane.parent) {
+      _videoEl.play();
+      _threeVideoPlane.setScaleVideoAspect(2);
+      _threeVideoPlane.addTo(_xrThreeBase.scene);
+    }
+  });
 
   // Directional Light
-  _threeDirectionalLight = new ThreeDirectionalLight();
+  _threeDirectionalLight = new ThreeDirectionalLight({
+    force: 0.5
+  });
   _threeDirectionalLight.move(new THREE.Vector3(0, 10, 10));
   _threeDirectionalLight.addTo(_xrThreeBase.scene);
 
@@ -47,6 +59,18 @@ const onStart = () => {
     force: 0.4
   });
   _threeAmbientLight.addTo(_xrThreeBase.scene);
+
+  // postprocessing
+  _composer = new EffectComposer(_xrThreeBase.renderer);
+  const renderPass = new RenderPass(_xrThreeBase.scene, _xrThreeBase.camera);
+  _composer.addPass(renderPass);
+  const bloomPath = new UnrealBloomPass(
+    new THREE.Vector2(window.innerWidth, window.innerHeight),
+    1.5,
+    0.4,
+    0.85
+  );
+  _composer.addPass(bloomPath);
 };
 
 const onUpdate = () => {

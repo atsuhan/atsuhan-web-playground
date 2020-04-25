@@ -26,6 +26,13 @@ export default class ThreeMeshBase {
     this.mesh.quaternion.copy(rot);
   }
 
+  lookAtAxisY(target) {
+    this.mesh.rotation.y = Math.atan2(
+      target.position.x - this.mesh.position.x,
+      target.position.z - this.mesh.position.z
+    );
+  }
+
   rotateOnAxis(axis, angle) {
     this.mesh.rotateOnAxis(axis, angle);
   }

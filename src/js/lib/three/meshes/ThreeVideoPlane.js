@@ -7,7 +7,7 @@ import ThreeMeshBase from './ThreeMeshBase';
 
 const CONFIG_DEFAULT = {
   videoEl: document.querySelector('video'),
-  scale: new THREE.Vector3(1.92, 1.08, 1),
+  transparent: true,
   receiveShadow: true
 };
 
@@ -28,14 +28,22 @@ export default class ThreeVideoPlane extends ThreeMeshBase {
     this.texture.format = THREE.RGBFormat;
 
     // material
-    this.material = new THREE.MeshLambertMaterial({
+    this.material = new THREE.MeshBasicMaterial({
       color: 0xffffff,
-      map: this.texture
+      map: this.texture,
+      transparent: this.config.transparent,
+      side: THREE.DoubleSide
     });
 
     // mesh
     this.mesh = new THREE.Mesh(new THREE.PlaneGeometry(), this.material);
-    this.mesh.scale.copy(this.config.scale);
     this.mesh.receiveShadow = this.config.receiveShadow;
+  }
+
+  setScaleVideoAspect(widthScale) {
+    const aspectRatio =
+      this.config.videoEl.videoHeight / this.config.videoEl.videoWidth;
+    const scaleVec = new THREE.Vector3(widthScale, widthScale * aspectRatio, 1);
+    this.mesh.scale.copy(scaleVec);
   }
 }
