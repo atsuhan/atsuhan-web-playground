@@ -25,6 +25,14 @@ class ThreeHelpers {
     };
   }
 
+  initGridHelper(name, parent, prop = { size: 100, step: 100 }) {
+    const boxHelper = new THREE.GridHelper(prop.size, prop.step);
+    this.helper[name] = {
+      parent,
+      helper: boxHelper
+    };
+  }
+
   // add and remove
   addHelpers() {
     _.forEach(this.helper, helperInfo => {
