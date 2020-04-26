@@ -12,31 +12,50 @@ import '@/js/import/three/shader/LuminosityHighPassShader.js';
 const CONFIG_DEFAULT = {
   scene: null,
   camera: null,
-  renderer: null
+  renderer: null,
+  property: {
+    strength: 2,
+    radius: 1,
+    threshold: 0
+  }
 };
 
 export default class ThreePostprocessingBloom {
   constructor(config = null) {
     this.config = config ? _.assign(CONFIG_DEFAULT, config) : CONFIG_DEFAULT;
     this.composer = null;
+    this.renderPass = null;
+    this.bloomPass = null;
 
     this.init();
   }
 
   init() {
-    const renderScene = new THREE.RenderPass(
+    this.initRenderPass();
+    this.initBloomPass();
+    this.initComposer();
+  }
+
+  initRenderPass() {
+    this.renderPass = new THREE.RenderPass(
       this.config.scene,
       this.config.camera
     );
-    const bloomPass = new THREE.UnrealBloomPass(
+  }
+
+  initBloomPass() {
+    this.bloomPass = new THREE.UnrealBloomPass(
       new THREE.Vector2(window.innerWidth, window.innerHeight),
-      2,
-      1,
-      0
+      this.config.property.strength,
+      this.config.property.radius,
+      this.config.property.threshold
     );
+  }
+
+  initComposer() {
     this.composer = new THREE.EffectComposer(this.config.renderer);
-    this.composer.addPass(renderScene);
-    this.composer.addPass(bloomPass);
+    this.composer.addPass(this.renderPass);
+    this.composer.addPass(this.bloomPass);
   }
 
   update() {

@@ -8,19 +8,23 @@ import ThreeDirectionalLight from '../../lib/three/lights/ThreeDirectionalLight'
 import ThreeAmbientLight from '../../lib/three/lights/ThreeAmbientLight';
 import ThreePostprocessingBloom from '../../lib/three/postprocessing/ThreePostprocessingBloom';
 import threeRaycaster from '../../lib/three/ThreeRaycaster';
+import ThreeParticlesKirakira from '@/js/lib/three/particles/ThreeParticlesKirakira';
 
-let _stats = null;
 let _videoEl = document.querySelector('.videos__hoshino');
+let _stats = null;
+let _dat = null;
+let _xrThreeBase = null;
 let _threeAmbientLight = null;
 let _threeDirectionalLight = null;
 let _threeGround = null;
 let _threeVideoPlane = null;
-let _xrThreeBase = null;
 let _threePostprocessing = null;
+let _threeParticle = null;
 
-const onStart = () => {
+const onStart = async () => {
   _xrThreeBase = new XrThreeBase();
   _stats = new Stats();
+  _dat = new dat.GUI();
 
   // three helper
   threeHelpers.initAxisHelper('centerAxis', _xrThreeBase.scene);
@@ -30,6 +34,10 @@ const onStart = () => {
   // Ground
   _threeGround = new ThreeGround();
   _threeGround.add(_xrThreeBase.scene);
+
+  // particle
+  _threeParticle = new ThreeParticlesKirakira();
+  await _threeParticle.init();
 
   // VideoPlane
   _threeVideoPlane = new ThreeVideoPlane({
@@ -46,6 +54,9 @@ const onStart = () => {
       _videoEl.play();
       _threeVideoPlane.setScaleVideoAspect(2);
       _threeVideoPlane.addTo(_xrThreeBase.scene);
+
+      _threeParticle.addTo(_xrThreeBase.scene);
+      _threeParticle.move(rayPos);
     }
   });
 
