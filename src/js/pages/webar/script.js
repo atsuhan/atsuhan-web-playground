@@ -6,24 +6,17 @@ import ThreeVideoPlane from '@/js/lib/three/meshes/ThreeVideoPlane';
 import XrThreeBase from '@/js/lib/8thwall/XrThreeBase';
 import ThreeDirectionalLight from '../../lib/three/lights/ThreeDirectionalLight';
 import ThreeAmbientLight from '../../lib/three/lights/ThreeAmbientLight';
+import ThreePostprocessingBloom from '../../lib/three/postprocessing/ThreePostprocessingBloom';
 import threeRaycaster from '../../lib/three/ThreeRaycaster';
 
-//PostProcessing
-import '@/js/import/three/postprocessing/EffectComposer.js';
-import '@/js/import/three/postprocessing/RenderPass.js';
-import '@/js/import/three/postprocessing/ShaderPass.js';
-import '@/js/import/three/postprocessing/UnrealBloomPass.js';
-import '@/js/import/three/shader/CopyShader.js';
-import '@/js/import/three/shader/LuminosityHighPassShader.js';
-
 let _stats = null;
-let _composer = null;
 let _videoEl = document.querySelector('.videos__hoshino');
 let _threeAmbientLight = null;
 let _threeDirectionalLight = null;
 let _threeGround = null;
 let _threeVideoPlane = null;
 let _xrThreeBase = null;
+let _threePostprocessing = null;
 
 const onStart = () => {
   _xrThreeBase = new XrThreeBase();
@@ -70,25 +63,15 @@ const onStart = () => {
   _threeAmbientLight.addTo(_xrThreeBase.scene);
 
   // postprocessing
-  const renderScene = new THREE.RenderPass(
-    _xrThreeBase.scene,
-    _xrThreeBase.camera
-  );
-  const bloomPass = new THREE.UnrealBloomPass(
-    new THREE.Vector2(window.innerWidth, window.innerHeight),
-    2,
-    1,
-    0
-  );
-  _composer = new THREE.EffectComposer(_xrThreeBase.renderer);
-  _composer.addPass(renderScene);
-  _composer.addPass(bloomPass);
-
-  //const box =
+  _threePostprocessing = new ThreePostprocessingBloom({
+    renderer: _xrThreeBase.renderer,
+    camera: _xrThreeBase.camera,
+    scene: _xrThreeBase.scene
+  });
 };
 
 const onUpdate = () => {
-  _composer.render();
+  _threePostprocessing.update();
   _stats.update();
 };
 
