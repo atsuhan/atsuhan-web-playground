@@ -28,7 +28,7 @@ export default class ThreeVideoPlane extends ThreeMeshBase {
     this.texture.format = THREE.RGBFormat;
 
     // material
-    this.material = new THREE.MeshBasicMaterial({
+    this.material = new THREE.MeshPhongMaterial({
       color: 0xffffff,
       map: this.texture,
       transparent: this.config.transparent,

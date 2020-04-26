@@ -22,7 +22,7 @@ export default class ThreeGround {
   }
 
   init() {
-    this.material = new THREE.MeshPhongMaterial({
+    this.material = new THREE.MeshBasicMaterial({
       color: this.config.color,
       opacity: this.config.opacity,
       transparent: this.config.transparent
