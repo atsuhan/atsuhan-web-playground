@@ -8,7 +8,7 @@ import ThreeDirectionalLight from '@/js/lib/three/lights/ThreeDirectionalLight';
 import ThreeAmbientLight from '@/js/lib/three/lights/ThreeAmbientLight';
 import ThreePostprocessingBloom from '@/js/lib/three/postprocessing/ThreePostprocessingBloom';
 import threeRaycaster from '@/js/lib/three/ThreeRaycaster';
-import ThreeParticlesKirakira from '@/js/lib/three/particles/ThreeParticlesKirakira';
+import ThreeParticlesColorful from '@/js/lib/three/particles/colorful/ThreeParticlesColorful';
 
 let _videoEl = document.querySelector('.videos__takagi');
 let _stats = null;
@@ -35,10 +35,6 @@ const onStart = () => {
   _threeGround = new ThreeGround();
   _threeGround.add(_xrThreeBase.scene);
 
-  // particle
-  _threeParticle = new ThreeParticlesKirakira();
-  _threeParticle.init();
-
   // VideoPlane
   _threeVideoPlane = new ThreeVideoPlane({
     videoEl: _videoEl
@@ -55,6 +51,8 @@ const onStart = () => {
       _threeVideoPlane.setScaleVideoAspect(2);
       _threeVideoPlane.addTo(_xrThreeBase.scene);
 
+      _threeParticle = new ThreeParticlesColorful();
+      _threeParticle.init();
       _threeParticle.addTo(_xrThreeBase.scene);
       _threeParticle.move(rayPos);
     }
@@ -83,6 +81,11 @@ const onStart = () => {
 
 const onUpdate = () => {
   _threePostprocessing.update();
+
+  if (_threeParticle) {
+    _threeParticle.update();
+  }
+
   _stats.update();
 };
 
