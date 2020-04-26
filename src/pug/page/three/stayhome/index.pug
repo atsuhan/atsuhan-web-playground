@@ -1,0 +1,19 @@
+extends /layout/_default-layout
+
+prepend config-block
+  - page_name = 'WebARMock_StayHome'
+  
+append stylesheet-block
+  link(rel="stylesheet", href=`./style.css`)
+
+append javascript-block
+  script(src="https://cdnjs.cloudflare.com/ajax/libs/three.js/110/three.min.js")
+  script(src="/three/script.js")
+
+block content-block
+  canvas#canvas
+  .videos
+    video.videos__takagi(loop crossOrigin="anonymous" playsinline style="display:none")
+      source(src="/videos/StayHomeJoymanTakagi.mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"')
+    video.videos__hoshino(loop crossOrigin="anonymous" playsinline style="display:none")
+      source(src="/videos/StayHomeHoshino.webm" type='video/webm')

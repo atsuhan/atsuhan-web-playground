@@ -4,13 +4,13 @@ import threeHelpers from '@/js/lib/three/ThreeHelpers';
 import ThreeGround from '@/js/lib/three/meshes/ThreeGround';
 import ThreeVideoPlane from '@/js/lib/three/meshes/ThreeVideoPlane';
 import XrThreeBase from '@/js/lib/8thwall/XrThreeBase';
-import ThreeDirectionalLight from '../../lib/three/lights/ThreeDirectionalLight';
-import ThreeAmbientLight from '../../lib/three/lights/ThreeAmbientLight';
-import ThreePostprocessingBloom from '../../lib/three/postprocessing/ThreePostprocessingBloom';
-import threeRaycaster from '../../lib/three/ThreeRaycaster';
+import ThreeDirectionalLight from '@/js/lib/three/lights/ThreeDirectionalLight';
+import ThreeAmbientLight from '@/js/lib/three/lights/ThreeAmbientLight';
+import ThreePostprocessingBloom from '@/js/lib/three/postprocessing/ThreePostprocessingBloom';
+import threeRaycaster from '@/js/lib/three/ThreeRaycaster';
 import ThreeParticlesKirakira from '@/js/lib/three/particles/ThreeParticlesKirakira';
 
-let _videoEl = document.querySelector('.videos__hoshino');
+let _videoEl = document.querySelector('.videos__takagi');
 let _stats = null;
 let _dat = null;
 let _xrThreeBase = null;
@@ -21,7 +21,7 @@ let _threeVideoPlane = null;
 let _threePostprocessing = null;
 let _threeParticle = null;
 
-const onStart = async () => {
+const onStart = () => {
   _xrThreeBase = new XrThreeBase();
   _stats = new Stats();
   _dat = new dat.GUI();
@@ -37,7 +37,7 @@ const onStart = async () => {
 
   // particle
   _threeParticle = new ThreeParticlesKirakira();
-  await _threeParticle.init();
+  _threeParticle.init();
 
   // VideoPlane
   _threeVideoPlane = new ThreeVideoPlane({
@@ -89,7 +89,7 @@ const onUpdate = () => {
 runAR(getCustomPipeline);
 function getCustomPipeline() {
   return {
-    name: 'WebARMock',
+    name: 'WebAR_StayHome',
     onStart,
     onUpdate
   };

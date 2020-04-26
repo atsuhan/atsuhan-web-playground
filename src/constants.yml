@@ -8,5 +8,8 @@ ENTRY:
   three/script.js: ./src/js/pages/three/script.js
   three/style.css: ./src/scss/style.scss
 
-  webar/script.js: ./src/js/pages/webar/script.js
-  webar/style.css: ./src/scss/style.scss
+  three/stayhome/script.js: ./src/js/pages/three/stayhome/script.js
+  three/stayhome/style.css: ./src/scss/style.scss
+
+  webar/stayhome/script.js: ./src/js/pages/webar/stayhome/script.js
+  webar/stayhome/style.css: ./src/scss/style.scss
