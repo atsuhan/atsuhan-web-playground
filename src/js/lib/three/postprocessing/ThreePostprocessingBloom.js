@@ -14,9 +14,9 @@ const CONFIG_DEFAULT = {
   camera: null,
   renderer: null,
   property: {
-    strength: 2,
-    radius: 1,
-    threshold: 0
+    strength: 1.5,
+    radius: 0.2,
+    threshold: 0.85
   }
 };
 
