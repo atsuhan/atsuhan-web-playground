@@ -10,9 +10,8 @@ import ThreePostprocessingBloom from '@/js/lib/three/postprocessing/ThreePostpro
 import threeRaycaster from '@/js/lib/three/ThreeRaycaster';
 import ThreeParticlesColorful from '@/js/lib/three/particles/colorful/ThreeParticlesColorful';
 
-let _videoEl = document.querySelector('.videos__takagi');
+let _videoEl = document.querySelector('.videos__hoshino');
 let _stats = null;
-let _dat = null;
 let _xrThreeBase = null;
 let _threeAmbientLight = null;
 let _threeDirectionalLight = null;
@@ -24,12 +23,11 @@ let _threeParticle = null;
 const onStart = () => {
   _xrThreeBase = new XrThreeBase();
   _stats = new Stats();
-  _dat = new dat.GUI();
 
   // three helper
-  threeHelpers.initAxisHelper('centerAxis', _xrThreeBase.scene);
-  //threeHelpers.initGridHelper('groundGrid', _xrThreeBase.scene);
-  threeHelpers.addHelpers();
+  // threeHelpers.initAxisHelper('centerAxis', _xrThreeBase.scene);
+  // threeHelpers.initGridHelper('groundGrid', _xrThreeBase.scene);
+  // threeHelpers.addHelpers();
 
   // Ground
   _threeGround = new ThreeGround();
@@ -80,12 +78,11 @@ const onStart = () => {
 };
 
 const onUpdate = () => {
-  _threePostprocessing.update();
-
   if (_threeParticle) {
     _threeParticle.update();
   }
 
+  _threePostprocessing.update();
   _stats.update();
 };
 

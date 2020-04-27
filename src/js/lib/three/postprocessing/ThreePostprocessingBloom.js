@@ -14,9 +14,9 @@ const CONFIG_DEFAULT = {
   camera: null,
   renderer: null,
   property: {
-    strength: 1,
+    strength: 0.5,
     radius: 0.2,
-    threshold: 0.85
+    threshold: 0
   }
 };
 
@@ -44,8 +44,9 @@ export default class ThreePostprocessingBloom {
   }
 
   initBloomPass() {
+    console.log(this.config.camera);
     this.bloomPass = new THREE.UnrealBloomPass(
-      new THREE.Vector2(window.innerWidth, window.innerHeight),
+      new THREE.Vector2(window.innerWidth, window.innerWidth),
       this.config.property.strength,
       this.config.property.radius,
       this.config.property.threshold

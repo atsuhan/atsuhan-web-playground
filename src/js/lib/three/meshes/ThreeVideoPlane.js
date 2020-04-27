@@ -4,11 +4,14 @@
 
 import _ from 'lodash';
 import ThreeMeshBase from './ThreeMeshBase';
+import vertexShader from '../../shader/chromakey/chromakey.vert';
+import fragmentShader from '../../shader/chromakey/chromakey.frag';
 
 const CONFIG_DEFAULT = {
   videoEl: document.querySelector('video'),
   transparent: true,
-  receiveShadow: true
+  receiveShadow: true,
+  difference: 0.7
 };
 
 export default class ThreeVideoPlane extends ThreeMeshBase {
@@ -28,11 +31,25 @@ export default class ThreeVideoPlane extends ThreeMeshBase {
     this.texture.format = THREE.RGBFormat;
 
     // material
-    this.material = new THREE.MeshPhongMaterial({
-      color: 0xffffff,
-      map: this.texture,
-      transparent: this.config.transparent,
-      side: THREE.DoubleSide
+    // this.material = new THREE.MeshPhongMaterial({
+    //   color: 0xffffff,
+    //   map: this.texture,
+    //   transparent: this.config.transparent,
+    //   side: THREE.DoubleSide
+    // });
+    this.material = new THREE.ShaderMaterial({
+      uniforms: {
+        texture: {
+          value: this.texture
+        },
+        difference: {
+          value: this.config.difference
+        }
+      },
+      vertexShader: vertexShader,
+      fragmentShader: fragmentShader,
+      transparent: true
+      //DoubleSide: THREE.DoubleSide
     });
 
     // mesh
