@@ -4,7 +4,7 @@
  */
 const XRRUN_PARAMS = {
   canvas: document.getElementById('camerafeed'),
-  webgl2: true
+  webgl2: false
 };
 
 export default function runAR(customPipelineModule) {

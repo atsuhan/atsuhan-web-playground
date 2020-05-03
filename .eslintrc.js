@@ -19,6 +19,8 @@ module.exports = {
   globals: {
     THREE: true,
     XR8: true,
-    XRExtras: true
+    XRExtras: true,
+    dat: true,
+    Float32Array: true
   }
 };

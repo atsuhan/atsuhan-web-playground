@@ -1,0 +1,23 @@
+extends /layout/_default-layout
+
+prepend config-block
+  - page_name = 'WebAR'
+  - page_description = 'WebAR init page'
+
+append stylesheet-block
+  link(rel="stylesheet", href=`/webar/stayhome/style.css`)
+
+append javascript-block
+  script(src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.7/dat.gui.min.js")
+  script(src="https://cdnjs.cloudflare.com/ajax/libs/three.js/110/three.min.js")
+  script(src="//cdn.8thwall.com/web/xrextras/xrextras.js")
+  script(async src=`//apps.8thwall.com/xrweb?appKey=${keys.EIGHTHWALL}`)
+  script(src="/webar/stayhome/script.js")
+
+block content-block
+  canvas#camerafeed
+  .videos
+    video.videos__takagi(loop crossOrigin="anonymous" playsinline style="display:none")
+      source(src="/videos/StayHomeJoymanTakagi.mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"')
+    video.videos__hoshino(loop crossOrigin="anonymous" playsinline style="display:none")
+      source(src="/videos/StayHomeHoshino.mp4" type='video/mp4')
